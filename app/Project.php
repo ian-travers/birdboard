@@ -29,4 +29,9 @@ use Illuminate\Support\Carbon;
 class Project extends Model
 {
     protected $guarded = [];
+
+    public function path()
+    {
+        return "/projects/{$this->id}";
+    }
 }
