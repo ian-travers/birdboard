@@ -9,7 +9,7 @@ use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class ProjectsTest extends TestCase
+class ManageProjectsTest extends TestCase
 {
     use WithFaker, RefreshDatabase;
 
@@ -34,28 +34,19 @@ class ProjectsTest extends TestCase
     }
 
     /** @test */
-    function guest_cannot_create_projects()
-    {
-        $attributes = factory(Project::class)->raw();
-        $this->post('/projects', $attributes)->assertRedirect('/login');
-    }
-
-    /** @test */
-    function guest_cannot_view_projects()
-    {
-        $this->get('/projects')->assertRedirect('/login');
-    }
-
-    /** @test */
-    function guest_cannot_view_a_single_projects()
+    function guest_cannot_manage_projects()
     {
         /** @var Project $project */
         $project = factory(Project::class)->create();
 
+        $this->get('/projects')->assertRedirect('/login');
         $this->get($project->path())->assertRedirect('/login');
+        $this->post('/projects', $project->toArray())->assertRedirect('/login');
+
+
     }
-    
-    /** @test */ 
+
+    /** @test */
     function a_user_can_view_their_project()
     {
         $this->be(factory(User::class)->create());
