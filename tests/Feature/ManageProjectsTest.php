@@ -20,6 +20,8 @@ class ManageProjectsTest extends TestCase
 
         $this->actingAs(factory(User::class)->create());
 
+        $this->get('/projects/create')->assertStatus(Response::HTTP_OK);
+
         $attributes = [
             'title' => $this->faker->sentence(4),
             'description' => $this->faker->paragraph(),
@@ -40,6 +42,7 @@ class ManageProjectsTest extends TestCase
         $project = factory(Project::class)->create();
 
         $this->get('/projects')->assertRedirect('/login');
+        $this->get('/projects/create')->assertRedirect('/login');
         $this->get($project->path())->assertRedirect('/login');
         $this->post('/projects', $project->toArray())->assertRedirect('/login');
 
