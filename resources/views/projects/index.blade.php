@@ -4,7 +4,10 @@
 
 @section('content')
     <div class="container">
-        <h1>BirdBoard</h1>
+        <div class="flex items-center mb-4">
+            <h1 class="mr-auto h1">BirdBoard</h1>
+            <a href="/projects/create">Create New Project</a>
+        </div>
 
         @forelse($projects as $project)
             <ul>
@@ -14,5 +17,4 @@
             <p>There is not projects yet.</p>
         @endforelse
     </div>
-
 @endsection
