@@ -21,7 +21,7 @@
     <nav class="bg-white">
         <div class="container mx-auto">
             <div class="flex justify-between items-center py-2">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="" href="{{ url('/') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
