@@ -3,7 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Support\Str;
 
 /**
  * App\Project
@@ -14,6 +14,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property string $description
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read string $description_for_card
  * @property-read \App\User $owner
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Project newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Project newQuery()
@@ -38,5 +39,10 @@ class Project extends Model
     public function owner()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function getDescriptionForCardAttribute()
+    {
+        return Str::limit($this->description, mb_strlen($this->title) < 40 ? 120 : 140 - mb_strlen($this->title));
     }
 }
