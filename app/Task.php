@@ -13,6 +13,7 @@ use Illuminate\Database\Eloquent\Model;
  * @property int $completed
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \App\Project $project
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Task newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Task newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Task query()
@@ -27,4 +28,14 @@ use Illuminate\Database\Eloquent\Model;
 class Task extends Model
 {
     protected $guarded = [];
+
+    public function project()
+    {
+        return $this->belongsTo(Project::class);
+    }
+
+    public function path()
+    {
+        return "/projects/{$this->project->id}/tasks/{$this->id}";
+    }
 }
