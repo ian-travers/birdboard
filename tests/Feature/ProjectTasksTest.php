@@ -12,7 +12,7 @@ class ProjectTasksTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */ 
+    /** @test */
     function quests_cannot_add_tasks_to_project()
     {
         /** @var Project $project */
@@ -21,7 +21,7 @@ class ProjectTasksTest extends TestCase
         $this->post($project->path() . '/tasks')->assertRedirect('/login');
     }
 
-    /** @test */ 
+    /** @test */
     function only_owner_of_a_project_may_add_tasks()
     {
         $this->signIn();
@@ -32,6 +32,20 @@ class ProjectTasksTest extends TestCase
         $this->post($project->path() . '/tasks', ['body' => 'Test task'])
             ->assertStatus(Response::HTTP_FORBIDDEN);
         $this->assertDatabaseMissing('tasks', ['body' => 'Test task']);
+    }
+
+    /** @test */
+    function only_owner_of_a_project_may_update_a_task()
+    {
+        $this->signIn();
+
+        /** @var Project $project */
+        $project = factory(Project::class)->create();
+        $task = $project->addTask('test task');
+
+        $this->patch($project->path() . '/tasks/' . $task->id, ['body' => 'changed'])
+            ->assertStatus(Response::HTTP_FORBIDDEN);
+        $this->assertDatabaseMissing('tasks', ['body' => 'changed']);
     }
 
     /** @test */
@@ -48,6 +62,30 @@ class ProjectTasksTest extends TestCase
 
         $this->get($project->path())
             ->assertSee('Test task');
+    }
+
+    /** @test */
+    function a_task_can_be_updated()
+    {
+        $this->withoutExceptionHandling();
+
+        $this->signIn();
+
+        /** @var Project $project */
+        $project = factory(Project::class)->create(['owner_id' => auth()->user()->id]);
+
+        /** @var Task $task */
+        $task = $project->addTask('test task');
+
+        $this->patch($project->path() . '/tasks/' . $task->id, [
+            'body' => 'changed',
+            'completed' => true,
+        ]);
+
+        $this->assertDatabaseHas('tasks', [
+            'body' => 'changed',
+            'completed' => true,
+        ]);
     }
 
     /** @test */
