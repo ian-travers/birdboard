@@ -27,8 +27,10 @@
                                 @csrf
                                 @method('patch')
                                 <div class="flex">
-                                    <input type="text" name="body" value="{{ $task->body }}" class="w-full {{ $task->completed ? 'text-gray-500' : '' }}">
-                                    <input type="checkbox" name="completed" onchange="this.form.submit()" {{ $task->completed ? 'checked' : '' }}>
+                                    <input type="text" name="body" value="{{ $task->body }}"
+                                           class="w-full {{ $task->completed ? 'text-gray-500' : '' }}">
+                                    <input type="checkbox" name="completed"
+                                           onchange="this.form.submit()" {{ $task->completed ? 'checked' : '' }}>
                                 </div>
                             </form>
                         </div>
@@ -44,15 +46,23 @@
                 </div>
 
                 <div>
-                    <h2 class="text-lg text-gray-600 mb-3">General Notes</h2>
+                    <h2 class="text-lg text-gray-600 mb-3">General notes</h2>
 
                     {{--general notes--}}
 
-                    <textarea class="card w-full" style="min-height: 200px;">
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto beatae cumque deleniti deserunt eius est illo in iure laboriosam magnam magni maiores minima minus molestiae neque nulla quae, quis quisquam vel voluptatibus. Suscipit!
-                    </textarea>
-                </div>
+                    <form action="{{ $project->path() }}" method="post">
 
+                        @csrf
+                        @method('patch')
+                        <textarea
+                                name="notes"
+                                class="card w-full mb-2"
+                                style="min-height: 200px;"
+                                placeholder="Any special that you want to make a note of?"
+                        >{{ $project->notes }}</textarea>
+                        <button type="submit" class="button">Save</button>
+                    </form>
+                </div>
             </div>
             <div class="lg:w-1/4 mx-3">
 

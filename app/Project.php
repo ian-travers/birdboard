@@ -12,21 +12,23 @@ use Illuminate\Support\Str;
  * @property int $owner_id
  * @property string $title
  * @property string $description
+ * @property string|null $notes
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
- * @property-read string $description_for_card
+ * @property-read mixed $description_for_card
  * @property-read \App\User $owner
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Task[] $tasks
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Project newModelQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Project newQuery()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Project query()
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Project whereCreatedAt($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Project whereDescription($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Project whereId($value)
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Project whereNotes($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Project whereOwnerId($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Project whereTitle($value)
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Project whereUpdatedAt($value)
  * @mixin \Eloquent
- * @property-read \Illuminate\Database\Eloquent\Collection|\App\Task[] $tasks
  */
 class Project extends Model
 {
@@ -54,6 +56,6 @@ class Project extends Model
 
     public function getDescriptionForCardAttribute()
     {
-        return Str::limit($this->description, mb_strlen($this->title) < 40 ? 120 : 140 - mb_strlen($this->title));
+        return Str::limit($this->description, mb_strlen($this->title) < 28 ? 120 : 120 - mb_strlen($this->title));
     }
 }
