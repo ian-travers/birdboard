@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Project;
 use App\Task;
 use Illuminate\Http\Response;
 use Tests\Setup\ProjectFactory;
@@ -16,8 +15,7 @@ class ProjectTasksTest extends TestCase
     /** @test */
     function quests_cannot_add_tasks_to_project()
     {
-        /** @var Project $project */
-        $project = factory(Project::class)->create();
+        $project = app(ProjectFactory::class)->create();
 
         $this->post($project->path() . '/tasks')->assertRedirect('/login');
     }
@@ -27,8 +25,7 @@ class ProjectTasksTest extends TestCase
     {
         $this->signIn();
 
-        /** @var Project $project */
-        $project = factory(Project::class)->create();
+        $project = app(ProjectFactory::class)->create();
 
         $this->post($project->path() . '/tasks', ['body' => 'Test task'])
             ->assertStatus(Response::HTTP_FORBIDDEN);
@@ -40,11 +37,11 @@ class ProjectTasksTest extends TestCase
     {
         $this->signIn();
 
-        /** @var Project $project */
-        $project = factory(Project::class)->create();
-        $task = $project->addTask('test task');
+        $project = app(ProjectFactory::class)
+            ->withTasks(1)
+            ->create();
 
-        $this->patch($project->path() . '/tasks/' . $task->id, ['body' => 'changed'])
+        $this->patch($project->tasks->first()->path(), ['body' => 'changed'])
             ->assertStatus(Response::HTTP_FORBIDDEN);
         $this->assertDatabaseMissing('tasks', ['body' => 'changed']);
     }
@@ -52,14 +49,10 @@ class ProjectTasksTest extends TestCase
     /** @test */
     function a_project_can_have_tasks()
     {
-        $this->withoutExceptionHandling();
+        $project = app(ProjectFactory::class)->create();
 
-        $this->signIn();
-
-        /** @var Project $project */
-        $project = factory(Project::class)->create(['owner_id' => auth()->user()->id]);
-
-        $this->post($project->path() . '/tasks', ['body' => 'Test task']);
+        $this->actingAs($project->owner)
+            ->post($project->path() . '/tasks', ['body' => 'Test task']);
 
         $this->get($project->path())
             ->assertSee('Test task');
@@ -89,14 +82,12 @@ class ProjectTasksTest extends TestCase
     /** @test */
     function a_task_requires_a_body()
     {
-        $this->signIn();
-
-
-        /** @var Project $project */
-        $project = factory(Project::class)->create(['owner_id' => auth()->user()->id]);
+        $project = app(ProjectFactory::class)->create();
 
         $attributes = factory(Task::class)->raw(['body' => '']);
 
-        $this->post($project->path() . '/tasks', $attributes)->assertSessionHasErrors('body');
+        $this->actingAs($project->owner)
+            ->post($project->path() . '/tasks', $attributes)
+            ->assertSessionHasErrors('body');
     }
 }
