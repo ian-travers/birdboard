@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Project;
 use App\Task;
 use Illuminate\Http\Response;
+use Tests\Setup\ProjectFactory;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -67,17 +68,14 @@ class ProjectTasksTest extends TestCase
     /** @test */
     function a_task_can_be_updated()
     {
-        $this->withoutExceptionHandling();
-
         $this->signIn();
 
-        /** @var Project $project */
-        $project = factory(Project::class)->create(['owner_id' => auth()->user()->id]);
+        $project = app(ProjectFactory::class)
+            ->withTasks(1)
+            ->create();
 
-        /** @var Task $task */
-        $task = $project->addTask('test task');
-
-        $this->patch($task->path(), [
+        $this->actingAs($project->owner)
+            ->patch($project->tasks->first()->path(), [
             'body' => 'changed',
             'completed' => true,
         ]);
