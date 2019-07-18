@@ -5,7 +5,7 @@ namespace Tests\Feature;
 use App\Project;
 use App\Task;
 use Illuminate\Http\Response;
-use Facades\Tests\Setup\ProjectFactory;
+use Tests\Setup\ProjectFactory;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -70,7 +70,9 @@ class ProjectTasksTest extends TestCase
     {
         $this->signIn();
 
-        $project = ProjectFactory::withTasks(1)->create();
+        $project = app(ProjectFactory::class)
+            ->withTasks(1)
+            ->create();
 
         $this->actingAs($project->owner)
             ->patch($project->tasks->first()->path(), [
