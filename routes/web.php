@@ -2,6 +2,20 @@
 
 use Illuminate\Support\Facades\Auth;
 
+\App\Project::created(function ($project) {
+    \App\Activity::create([
+        'project_id' => $project->id,
+        'description' => 'created',
+    ]);
+});
+
+\App\Project::updated(function ($project) {
+    \App\Activity::create([
+        'project_id' => $project->id,
+        'description' => 'updated',
+    ]);
+});
+
 Route::get('/', function () {
     return view('welcome');
 });

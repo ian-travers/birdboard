@@ -15,6 +15,7 @@ use Illuminate\Support\Str;
  * @property string|null $notes
  * @property \Illuminate\Support\Carbon|null $created_at
  * @property \Illuminate\Support\Carbon|null $updated_at
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Activity[] $activity
  * @property-read mixed $description_for_card
  * @property-read \App\User $owner
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Task[] $tasks
@@ -54,8 +55,15 @@ class Project extends Model
         return $this->tasks()->create(compact('body'));
     }
 
+    public function activity()
+    {
+        return $this->hasMany(Activity::class);
+    }
+
     public function getDescriptionForCardAttribute()
     {
         return Str::limit($this->description, mb_strlen($this->title) < 28 ? 120 : 120 - mb_strlen($this->title));
     }
+
+
 }
