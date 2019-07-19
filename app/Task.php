@@ -29,6 +29,26 @@ class Task extends Model
 {
     protected $guarded = [];
 
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::created(function (Task $task) {
+            Activity::create([
+                'project_id' => $task->project->id,
+                'description' => 'created_task',
+            ]);
+        });
+
+        static::updated(function (Task $task) {
+            if (! $task->completed) return;
+            Activity::create([
+                'project_id' => $task->project->id,
+                'description' => 'completed_task',
+            ]);
+        });
+    }
+
     protected $touches = ['project'];
 
     public function project()
