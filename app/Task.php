@@ -36,15 +36,20 @@ class Task extends Model
         static::created(function (Task $task) {
             $task->project->recordActivity('created_task');
         });
-
-        static::updated(function (Task $task) {
-            if (! $task->completed) return;
-
-            $task->project->recordActivity('completed_task');
-        });
     }
 
     protected $touches = ['project'];
+
+    protected $casts = [
+        'completed' => 'boolean',
+    ];
+
+    public function complete()
+    {
+        $this->update(['completed' => true]);
+
+        $this->project->recordActivity('completed_task');
+    }
 
     public function project()
     {
