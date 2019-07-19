@@ -1,10 +1,6 @@
 @php /* @var App\Project $project */ @endphp
+@csrf
 
-<form method="post" action="{{ $project->path() }}" class="bg-white lg:w-1/2 lg:mx-auto py-12 px-16 rounded shadow">
-
-    @csrf
-    @method('patch')
-    <h1 class="mb-10 text-2xl text-center font-normal">Edit your project</h1>
     <div class="field mb-6">
         <label class="label text-sm mb-2 block" for="title">Title</label>
         <div class="control">
@@ -19,8 +15,7 @@
     </div>
     <div class="field">
         <div class="control">
-            <button type="submit" class="button is-link mr-2">Update Project</button>
+            <button type="submit" class="button is-link mr-2">{{ $btnText }}</button>
             <a href="{{ $project->path() }}">Cancel</a>
         </div>
     </div>
-</form>
