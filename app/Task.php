@@ -29,20 +29,6 @@ class Task extends Model
 {
     protected $guarded = [];
 
-    protected static function boot()
-    {
-        parent::boot();
-
-        static::created(function (Task $task) {
-            $task->project->recordActivity('created_task');
-        });
-
-        static::deleted(function (Task $task) {
-            $task->project->recordActivity('deleted_task');
-        });
-
-    }
-
     protected $touches = ['project'];
 
     protected $casts = [
