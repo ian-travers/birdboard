@@ -36,6 +36,11 @@ class Task extends Model
         static::created(function (Task $task) {
             $task->project->recordActivity('created_task');
         });
+
+        static::deleted(function (Task $task) {
+            $task->project->recordActivity('deleted_task');
+        });
+
     }
 
     protected $touches = ['project'];
@@ -55,7 +60,7 @@ class Task extends Model
     {
         $this->update(['completed' => false]);
 
-        $this->project->recordActivity('completed_task');
+        $this->project->recordActivity('uncompleted_task');
     }
 
     public function project()
