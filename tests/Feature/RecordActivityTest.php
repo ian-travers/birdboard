@@ -6,12 +6,12 @@ use Tests\Setup\ProjectFactory;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
-class ActivityFeedTest extends TestCase
+class RecordActivityTest extends TestCase
 {
     use RefreshDatabase;
     
     /** @test */ 
-    function creating_a_project_records_activity()
+    function creating_a_project()
     {
         $project = app(ProjectFactory::class)->create();
 
@@ -20,7 +20,7 @@ class ActivityFeedTest extends TestCase
     }
 
     /** @test */
-    function updating_a_project_records_activity()
+    function updating_a_project()
     {
         $project = app(ProjectFactory::class)->create();
 
@@ -31,7 +31,7 @@ class ActivityFeedTest extends TestCase
     }
     
     /** @test */ 
-    function creating_a_task_records_project_activity()
+    function creating_a_task()
     {
         $project = app(ProjectFactory::class)->create();
 
@@ -42,7 +42,7 @@ class ActivityFeedTest extends TestCase
     }
 
     /** @test */
-    function completing_a_task_records_project_activity()
+    function completing_a_task()
     {
         $project = app(ProjectFactory::class)->withTasks(1)->create();
 
