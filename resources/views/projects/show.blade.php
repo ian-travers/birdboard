@@ -26,7 +26,7 @@
 
                                 @csrf
                                 @method('patch')
-                                <div class="flex">
+                                <div class="flex items-center">
                                     <input type="text" name="body" value="{{ $task->body }}"
                                            class="w-full {{ $task->completed ? 'text-gray-500' : '' }}">
                                     <input type="checkbox" name="completed"
@@ -73,9 +73,19 @@
                     @endif
                 </div>
             </div>
+
             <div class="lg:w-1/4 mx-3">
 
                 @include('projects.card')
+
+                <div class="card mt-3">
+                    <ul class="text-xs">
+
+                        @foreach($project->activity as $activity)
+                            <li class="{{ $loop->last ? '' : 'mb-1' }}">{{ $activity->description }}</li>
+                        @endforeach
+                    </ul>
+                </div>
             </div>
         </div>
     </main>
