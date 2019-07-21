@@ -12,12 +12,15 @@ trait RecordActivityTrait
      *
      * @var array
      */
-    public $old = [];
+    public $oldAttributes = [];
 
+    /**
+     * Boot the trait
+     */
     public static function bootRecordActivityTrait()
     {
         static::updating(function($model) {
-            $model->old = $model->getOriginal();
+            $model->oldAttributes = $model->getOriginal();
         });
     }
 
@@ -44,7 +47,7 @@ trait RecordActivityTrait
     {
         if ($this->wasChanged()) {
             return [
-                'before' => Arr::except(array_diff($this->old, $this->getAttributes()), 'updated_at'),
+                'before' => Arr::except(array_diff($this->oldAttributes, $this->getAttributes()), 'updated_at'),
                 'after' => Arr::except($this->getChanges(), 'updated_at'),
             ];
         }
