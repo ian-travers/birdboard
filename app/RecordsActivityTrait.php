@@ -23,9 +23,7 @@ trait RecordsActivityTrait
             $model->oldAttributes = $model->getOriginal();
         });
 
-        $recordableEvents = self::recordableEvents();
-
-        foreach ($recordableEvents as $event) {
+        foreach (self::recordableEvents() as $event) {
             static::$event(function ($model) use ($event) {
                 if (class_basename($model) !== 'Project') {
                     $event = "{$event}_" . strtolower(class_basename($model));
