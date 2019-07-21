@@ -35,11 +35,7 @@ trait RecordsActivityTrait
 
     protected function activityDescription($description)
     {
-        if (class_basename($this) !== 'Project') {
-            return "{$description}_" . strtolower(class_basename($this)); // created_task
-        }
-
-        return $description; // created
+        return "{$description}_" . strtolower(class_basename($this));
     }
 
     /**
