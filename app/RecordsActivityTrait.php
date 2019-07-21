@@ -19,10 +19,6 @@ trait RecordsActivityTrait
      */
     public static function bootRecordsActivityTrait()
     {
-        static::updating(function ($model) {
-            $model->oldAttributes = $model->getOriginal();
-        });
-
         foreach (self::recordableEvents() as $event) {
             static::$event(function ($model) use ($event) {
                 if (class_basename($model) !== 'Project') {
@@ -31,6 +27,12 @@ trait RecordsActivityTrait
 
                 $model->recordActivity($event);
             });
+
+            if ($event === 'updated') {
+                static::updating(function ($model) {
+                    $model->oldAttributes = $model->getOriginal();
+                });
+            }
         }
     }
 
