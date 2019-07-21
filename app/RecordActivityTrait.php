@@ -14,6 +14,13 @@ trait RecordActivityTrait
      */
     public $old = [];
 
+    public static function bootRecordActivityTrait()
+    {
+        static::updating(function($model) {
+            $model->old = $model->getOriginal();
+        });
+    }
+
     /**
      * Record activity for a model
      *
