@@ -19,7 +19,7 @@ trait RecordsActivityTrait
      */
     public static function bootRecordsActivityTrait()
     {
-        static::updating(function($model) {
+        static::updating(function ($model) {
             $model->oldAttributes = $model->getOriginal();
         });
 
@@ -40,11 +40,10 @@ trait RecordsActivityTrait
     protected static function recordableEvents(): array
     {
         if (isset(static::$recordableEvents)) {
-            $recordableEvents = static::$recordableEvents;
-        } else {
-            $recordableEvents = ['created', 'updated', 'deleted'];
+            return $recordableEvents = static::$recordableEvents;
         }
-        return $recordableEvents;
+
+        return $recordableEvents = ['created', 'updated', 'deleted'];
     }
 
     /**
