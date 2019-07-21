@@ -33,7 +33,7 @@ use Illuminate\Support\Str;
  */
 class Project extends Model
 {
-    use RecordActivityTrait;
+    use RecordsActivityTrait;
 
     protected $guarded = [];
 

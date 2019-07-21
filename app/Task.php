@@ -27,7 +27,7 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Task extends Model
 {
-    use RecordActivityTrait;
+    use RecordsActivityTrait;
 
     protected $guarded = [];
 
@@ -36,6 +36,8 @@ class Task extends Model
     protected $casts = [
         'completed' => 'boolean',
     ];
+
+    protected static $recordableEvents = ['created', 'deleted'];
 
     public function complete()
     {
