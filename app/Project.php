@@ -3,7 +3,6 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
 /**
@@ -34,9 +33,9 @@ use Illuminate\Support\Str;
  */
 class Project extends Model
 {
-    protected $guarded = [];
+    use RecordActivityTrait;
 
-    public $old = [];
+    protected $guarded = [];
 
     public function path()
     {
@@ -56,24 +55,6 @@ class Project extends Model
     public function addTask($body): Task
     {
         return $this->tasks()->create(compact('body'));
-    }
-
-    public function recordActivity($description)
-    {
-        $this->activity()->create([
-            'description' => $description,
-            'changes' => $this->activityChanges(),
-        ]);
-    }
-
-    protected function activityChanges()
-    {
-        if ($this->wasChanged()) {
-            return [
-                'before' => Arr::except(array_diff($this->old, $this->getAttributes()), 'updated_at'),
-                'after' => Arr::except($this->getChanges(), 'updated_at'),
-            ];
-        }
     }
 
     public function activity()
