@@ -23,11 +23,7 @@ trait RecordsActivityTrait
             $model->oldAttributes = $model->getOriginal();
         });
 
-        if (isset(static::$recordableEvents)) {
-            $recordableEvents = static::$recordableEvents;
-        } else {
-            $recordableEvents = ['created', 'updated', 'deleted'];
-        }
+        $recordableEvents = self::recordableEvents();
 
         foreach ($recordableEvents as $event) {
             static::$event(function ($model) use ($event) {
@@ -38,6 +34,19 @@ trait RecordsActivityTrait
                 $model->recordActivity($event);
             });
         }
+    }
+
+    /**
+     * @return array
+     */
+    protected static function recordableEvents(): array
+    {
+        if (isset(static::$recordableEvents)) {
+            $recordableEvents = static::$recordableEvents;
+        } else {
+            $recordableEvents = ['created', 'updated', 'deleted'];
+        }
+        return $recordableEvents;
     }
 
     /**
