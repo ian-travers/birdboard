@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
 /**
@@ -69,8 +70,8 @@ class Project extends Model
     {
         if ($description == 'updated') {
             return [
-                'before' => array_diff($this->old, $this->getAttributes()),
-                'after' => $this->getChanges(),
+                'before' => Arr::except(array_diff($this->old, $this->getAttributes()), 'updated_at'),
+                'after' => Arr::except($this->getChanges(), 'updated_at'),
             ];
         }
     }
