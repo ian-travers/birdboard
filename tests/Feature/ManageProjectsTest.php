@@ -54,11 +54,24 @@ class ManageProjectsTest extends TestCase
             ->assertSee(Str::limit($attributes['description'], 60, ''))
             ->assertSee($attributes['notes']);
     }
+
+    /** @test */
+    function unauthorized_users_cannot_delete_projects()
+    {
+        $project = app(ProjectFactory::class)->create();
+
+        $this->delete($project->path())
+            ->assertRedirect('/login');
+
+        $this->signIn();
+
+        $this->delete($project->path())
+            ->assertStatus(Response::HTTP_FORBIDDEN);
+    }
     
     /** @test */ 
     function user_can_delete_a_project()
     {
-        $this->withoutExceptionHandling();
         $project = app(ProjectFactory::class)->create();
 
         $this->actingAs($project->owner)
