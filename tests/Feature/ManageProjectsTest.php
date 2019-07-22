@@ -54,6 +54,19 @@ class ManageProjectsTest extends TestCase
             ->assertSee(Str::limit($attributes['description'], 60, ''))
             ->assertSee($attributes['notes']);
     }
+    
+    /** @test */ 
+    function user_can_delete_a_project()
+    {
+        $this->withoutExceptionHandling();
+        $project = app(ProjectFactory::class)->create();
+
+        $this->actingAs($project->owner)
+            ->delete($project->path())
+            ->assertRedirect('/projects');
+
+        $this->assertDatabaseMissing('projects', $project->only('id'));
+    }
 
     /** @test */
     function user_can_update_a_project()

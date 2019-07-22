@@ -52,6 +52,18 @@ class ProjectsController extends Controller
     }
 
     /**
+     * @param Project $project
+     * @return \Illuminate\Http\RedirectResponse|\Illuminate\Routing\Redirector
+     * @throws \Exception
+     */
+    public function destroy(Project $project)
+    {
+        $project->delete();
+
+        return redirect('/projects');
+    }
+
+    /**
      * @return array
      */
     protected function validateRequest()
