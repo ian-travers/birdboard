@@ -67,9 +67,7 @@ trait RecordsActivityTrait
 
     protected function activityOwner()
     {
-        $project = $this->project ?? $this;
-
-        return $project->owner;
+        return ($this->project ?? $this)->owner;
     }
 
     /**
