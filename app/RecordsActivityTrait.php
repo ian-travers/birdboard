@@ -83,6 +83,8 @@ trait RecordsActivityTrait
                 'after' => Arr::except($this->getChanges(), 'updated_at'),
             ];
         }
+
+        return null;
     }
 
     /**
@@ -92,6 +94,9 @@ trait RecordsActivityTrait
      */
     public function activity()
     {
+        if (get_class($this) === Project::class) {
+            return $this->hasMany(Activity::class)->latest();
+        }
         return $this->morphMany(Activity::class, 'subject')->latest();
     }
 }

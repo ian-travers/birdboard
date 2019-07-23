@@ -68,11 +68,6 @@ class Project extends Model
         return $this->belongsToMany(User::class, 'project_members');
     }
 
-    public function activity()
-    {
-        return $this->hasMany(Activity::class)->latest();
-    }
-
     public function getDescriptionForCardAttribute()
     {
         return Str::limit($this->description, mb_strlen($this->title) < 28 ? 120 : 120 - mb_strlen($this->title));
