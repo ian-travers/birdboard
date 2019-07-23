@@ -5,7 +5,6 @@ namespace Tests\Feature;
 use App\Project;
 use Illuminate\Http\Response;
 use Illuminate\Support\Str;
-//use Tests\Setup\ProjectFactory;
 use Tests\Setup\ProjectFactory;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;

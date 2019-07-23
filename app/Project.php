@@ -17,6 +17,7 @@ use Illuminate\Support\Str;
  * @property \Illuminate\Support\Carbon|null $updated_at
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Activity[] $activity
  * @property-read mixed $description_for_card
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\User[] $members
  * @property-read \App\User $owner
  * @property-read \Illuminate\Database\Eloquent\Collection|\App\Task[] $tasks
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Project newModelQuery()
@@ -55,6 +56,16 @@ class Project extends Model
     public function addTask($body): Task
     {
         return $this->tasks()->create(compact('body'));
+    }
+
+    public function invite(User $user)
+    {
+        return $this->members()->attach($user);
+    }
+
+    public function members()
+    {
+        return $this->belongsToMany(User::class, 'project_members');
     }
 
     public function activity()
