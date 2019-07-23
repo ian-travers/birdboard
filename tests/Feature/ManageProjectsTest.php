@@ -58,11 +58,8 @@ class ManageProjectsTest extends TestCase
     function a_user_cam_see_all_projects_they_have_been_invited_to_on_their_dashboard()
     {
         // given we're signed in
-        $user = $this->signIn();
-
         // and we're been invited to a project that was not created by us
-        $project = app(ProjectFactory::class)->create();
-        $project->invite($user);
+        $project = tap(app(ProjectFactory::class)->create())->invite($this->signIn());
 
         // when I visit my dashboard I should see that project
         $this->get(route('projects.index'))
