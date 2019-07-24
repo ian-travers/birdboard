@@ -4,11 +4,25 @@
 
 @section('content')
     <header class="flex items-center mb-3 py-3">
-        <div class="flex w-full items-end justify-between">
+        <div class="flex justify-between items-end w-full">
             <p class="text-gray-500">
-                <a href="/projects">My Projects</a> / {{ $project->title }}
+                <a href="{{ route('projects.index') }}">My Projects</a> / {{ $project->title }}
             </p>
-            <a class="button" href="{{ $project->path() . '/edit' }}">Edit Project</a>
+            <div class="flex items-center">
+
+                @foreach($project->members as $member)
+                    <img src="{{ gravatar_url($member->email) }}"
+                         alt="{{ $member->name }}'s avatar"
+                         title="{{ $member->name }}"
+                         class="inline rounded-full w-8 mr-2">
+                @endforeach
+
+                <img src="{{ gravatar_url($project->owner->email) }}"
+                     alt="{{ $project->owner->name }}'s avatar"
+                     title="{{ $project->owner->name }}"
+                     class="inline rounded-full w-8 mr-2">
+                <a class="button ml-4" href="{{ $project->path() . '/edit' }}">Edit Project</a>
+            </div>
         </div>
     </header>
 
