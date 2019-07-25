@@ -17,7 +17,15 @@ class InvitationsTest extends TestCase
     {
         $project = app(ProjectFactory::class)->create();
 
-        $this->actingAs(factory(User::class)->create())
+        $user = factory(User::class)->create();
+
+        $this->actingAs($user)
+            ->post($project->path() . '/invitations', [])
+            ->assertStatus(Response::HTTP_FORBIDDEN);
+
+        $project->invite($user);
+
+        $this->actingAs($user)
             ->post($project->path() . '/invitations', [])
             ->assertStatus(Response::HTTP_FORBIDDEN);
     }
