@@ -53,7 +53,7 @@ class InvitationsTest extends TestCase
             ->post($project->path() . '/invitations', ['email' => 'not_a_user@fake.ml'])
             ->assertSessionHasErrors([
                 'email' => 'The user you are inviting must have a Birdboard account.',
-            ]);
+            ], null, 'invitations');
 
     }
 
