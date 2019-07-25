@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Gate;
 
 class ProjectInvitationRequest extends FormRequest
 {
+    protected $errorBag = 'invitations';
+
     public function authorize()
     {
         return Gate::allows('update', $this->route('project'));
