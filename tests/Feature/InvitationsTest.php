@@ -11,23 +11,22 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class InvitationsTest extends TestCase
 {
     use RefreshDatabase;
-    
-    /** @test */ 
+
+    /** @test */
     function non_owner_may_not_invite_users()
     {
         $project = app(ProjectFactory::class)->create();
-
         $user = factory(User::class)->create();
 
-        $this->actingAs($user)
-            ->post($project->path() . '/invitations', [])
-            ->assertStatus(Response::HTTP_FORBIDDEN);
+        $assertInvitationForbidden = function () use ($user, $project) {
+            $this->actingAs($user)
+                ->post($project->path() . '/invitations', [])
+                ->assertStatus(Response::HTTP_FORBIDDEN);
+        };
 
+        $assertInvitationForbidden();
         $project->invite($user);
-
-        $this->actingAs($user)
-            ->post($project->path() . '/invitations', [])
-            ->assertStatus(Response::HTTP_FORBIDDEN);
+        $assertInvitationForbidden();
     }
 
     /** @test */
