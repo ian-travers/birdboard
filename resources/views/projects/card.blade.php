@@ -5,13 +5,16 @@
         <a href="{{ $project->path() }}">{{ $project->title }}</a>
     </h3>
     <div class="text-gray-500 mb-4 flex-1">{{ $project->description_for_card }}</div>
-    <footer>
-        <form method="post" action="{{ $project->path() }}" class="text-right">
 
-            @csrf
-            @method('delete')
-            <button type="submit" class="text-xs">Delete</button>
-        </form>
-    </footer>
+    @can('manage', $project)
+        <footer>
+            <form method="post" action="{{ $project->path() }}" class="text-right">
+
+                @csrf
+                @method('delete')
+                <button type="submit" class="text-xs">Delete</button>
+            </form>
+        </footer>
+    @endcan
 </div>
 

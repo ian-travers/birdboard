@@ -53,8 +53,8 @@ class ManageProjectsTest extends TestCase
             ->assertSee(Str::limit($attributes['description'], 60, ''))
             ->assertSee($attributes['notes']);
     }
-    
-    /** @test */ 
+
+    /** @test */
     function a_user_cam_see_all_projects_they_have_been_invited_to_on_their_dashboard()
     {
         // given we're signed in
@@ -74,13 +74,19 @@ class ManageProjectsTest extends TestCase
         $this->delete($project->path())
             ->assertRedirect('/login');
 
-        $this->signIn();
+        $user = $this->signIn();
 
         $this->delete($project->path())
             ->assertStatus(Response::HTTP_FORBIDDEN);
+
+        $project->invite($user);
+
+        $this->actingAs($user)
+            ->delete($project->path())
+            ->assertStatus(Response::HTTP_FORBIDDEN);
     }
-    
-    /** @test */ 
+
+    /** @test */
     function user_can_delete_a_project()
     {
         $project = app(ProjectFactory::class)->create();
