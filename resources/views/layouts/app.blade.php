@@ -53,11 +53,7 @@
                             @endif
                         @else
 
-                            <div class="flex items-center mr-8">
-                                <button class="rounded-full border border-accent w-5 h-5 mr-2"></button>
-                                <button class="rounded-full border border-accent w-5 h-5 mr-2"></button>
-                                <button class="rounded-full border border-accent w-5 h-5 mr-2"></button>
-                            </div>
+                            <theme-switcher></theme-switcher>
                             <a class="flex items-center text-default text-sm" href="#" role="button"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                                 <img src="{{ gravatar_url(Auth::user()->email) }}" class="mr-3 rounded-full" width="35">
