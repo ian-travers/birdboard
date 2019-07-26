@@ -148,7 +148,12 @@ module.exports = {
             '56': '14rem',
             '64': '16rem',
         },
-        backgroundColor: theme => theme('colors'),
+        // backgroundColor: theme => theme('colors'),
+        backgroundColor: {
+            page: 'var(--page-background-color)',
+            card: 'var(--card-background-color)',
+            button: 'var(--button-background-color)',
+        },
         backgroundPosition: {
             bottom: 'bottom',
             center: 'center',
