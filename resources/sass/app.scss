@@ -7,12 +7,17 @@
 @import 'themes/light';
 @import 'themes/dark';
 
+
 @import 'components/button';
 @import 'components/card';
 
 body,
 button {
   @apply .text-default;
+}
+
+a:hover {
+  @apply .underline;
 }
 
 .section {

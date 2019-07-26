@@ -2,6 +2,10 @@
   @apply .bg-button .no-underline .rounded-lg .text-sm .py-2 .px-5;
   color: white;
 
+  &:hover {
+    @apply .no-underline;
+  }
+
   .theme-light & {
     box-shadow: 0 2px 7px 0 #b0eaff;
   }
