@@ -13,6 +13,7 @@
 
 .card {
   @apply .bg-card .p-5 .rounded-lg .shadow;
+  color: var(--text-default-color);
 }
 
 @tailwind utilities;
@@ -22,6 +23,15 @@
   --card-background-color: white;
   --button-background-color: #8ae2fe;
   --header-background-color: white;
+}
+
+.theme-dark {
+  --page-background-color: #17181e;
+  --card-background-color: #1f2027;
+  --button-background-color: #59b6f9;
+  --header-background-color: #1f2027;
+
+  --text-default-color: #fff;
 }
 
 

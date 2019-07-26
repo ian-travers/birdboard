@@ -16,7 +16,7 @@
     <!-- Styles -->
     <link href="{{ mix('css/app.css', 'build') }}" rel="stylesheet">
 </head>
-<body class="theme-light bg-page">
+<body class="theme-dark bg-page">
 <div id="app">
     <nav class="bg-header">
         <div class="container mx-auto">
