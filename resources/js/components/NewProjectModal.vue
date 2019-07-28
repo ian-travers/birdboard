@@ -78,14 +78,13 @@
                 this.form.tasks.push({value: ''});
             },
 
-            submit() {
-                axios.post('/projects', this.form)
-                    .then(response => {
-                        location = response.data.message;
-                    })
-                    .catch(error => {
-                        this.errors = error.response.data.errors;
-                    });
+            async submit() {
+                try {
+                    let response = await axios.post('/projects', this.form);
+                    location = response.data.message;
+                } catch (error) {
+                    this.errors = error.response.data.errors;
+                }
             }
         }
     }
