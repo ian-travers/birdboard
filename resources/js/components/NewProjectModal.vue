@@ -80,8 +80,7 @@
 
             async submit() {
                 try {
-                    let response = await axios.post('/projects', this.form);
-                    location = response.data.message;
+                    location = (await axios.post('/projects', this.form)).data.message;
                 } catch (error) {
                     this.errors = error.response.data.errors;
                 }
