@@ -4,13 +4,13 @@
 <div class="field mb-6">
     <label class="label text-sm mb-2 block" for="title">Title</label>
     <div class="control">
-        <input class="input bg-transparent border border-gray-300 w-full rounded p-2 text-xs" type="text" name="title" placeholder="Title" value="{{ $project->title }}" required>
+        <input class="input text-muted bg-transparent border border-muted-light w-full rounded p-2 text-xs" type="text" name="title" placeholder="My awesome project" value="{{ $project->title }}" required>
     </div>
 </div>
 <div class="field mb-6">
     <label class="label text-sm mb-2 block" for="description">Description</label>
     <div class="control">
-        <textarea class="textarea bg-transparent border border-grey-light rounded p-2 text-xs w-full" name="description" rows="10" placeholder="I should start learning piano" required>{{ $project->description }}</textarea>
+        <textarea class="textarea text-muted bg-transparent border border-muted-light rounded p-2 text-xs w-full" name="description" rows="10" placeholder="I should start learning piano" required>{{ $project->description }}</textarea>
     </div>
 </div>
 <div class="field">
