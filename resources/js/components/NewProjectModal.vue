@@ -51,9 +51,15 @@
                 </div>
             </div>
 
-            <footer class="flex justify-end">
-                <button type="button" class="button is-outlined mr-4" @click="$modal.hide('new-project')">Cancel</button>
-                <button class="button">Create project</button>
+            <footer class="flex justify-between">
+                <div>
+                    <button type="button" class="button is-outlined focus:outline-none" @click="form.reset()">Clear</button>
+                </div>
+                <div>
+                    <button type="button" class="button is-outlined mr-4" @click="$modal.hide('new-project')">Cancel</button>
+                    <button class="button">Create project</button>
+                </div>
+
             </footer>
         </form>
     </modal>
