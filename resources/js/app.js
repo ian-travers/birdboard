@@ -25,6 +25,7 @@ Vue.use(VModal);
 
 Vue.component('theme-switcher', require('./components/ThemeSwitcher').default);
 Vue.component('new-project-modal', require('./components/NewProjectModal').default);
+Vue.component('dropdown', require('./components/Dropdown').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

@@ -54,23 +54,26 @@
                         @else
 
                             <theme-switcher></theme-switcher>
-                            <a class="flex items-center text-default text-sm" href="#" role="button"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                <img src="{{ gravatar_url(Auth::user()->email) }}" class="mr-3 rounded-full" width="35">
-                                {{ Auth::user()->name }}
-                            </a>
 
-                            <a class="dropdown-item" href="{{ route('logout') }}"
-                               onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                {{ __('Logout') }}
-                            </a>
+                            <dropdown align="right" width="200px">
+                                <template v-slot:trigger>
+                                    <button class="flex items-center text-default text-sm" href="#">
+                                        <img src="{{ gravatar_url(Auth::user()->email) }}" class="mr-3 rounded-full"
+                                             width="35">
+                                        {{ Auth::user()->name }}
+                                    </button>
+                                </template>
 
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST"
-                                  style="display: none;">
+                                <a href="#" class="dropdown-menu-link">About</a>
+                                <a href="#" class="dropdown-menu-link">Item 2</a>
+                                <a href="#" class="dropdown-menu-link">Item 3</a>
 
-                                @csrf
-                            </form>
+                                <form action="{{ route('logout') }}" method="post">
+
+                                    @csrf
+                                    <button type="submit" class="dropdown-menu-link w-full text-left">Logout</button>
+                                </form>
+                            </dropdown>
 
                         @endguest
                     </div>

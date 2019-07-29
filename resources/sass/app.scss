@@ -10,6 +10,7 @@
 
 @import 'components/button';
 @import 'components/card';
+@import 'components/dropdown';
 
 body,
 button {
@@ -22,4 +23,12 @@ a:hover {
 
 .section {
   @apply .px-8;
+}
+
+.pin-l {
+  left: 0;
+}
+
+.pin-r {
+  right: 0;
 }
