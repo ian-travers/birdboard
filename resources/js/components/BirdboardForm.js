@@ -52,6 +52,7 @@ class BirdboardForm {
 
     reset() {
         Object.assign(this, this.originalData);
+        this.errors = {};
     }
 }
 
