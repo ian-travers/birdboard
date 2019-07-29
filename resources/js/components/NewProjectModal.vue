@@ -83,11 +83,6 @@
             async submit() {
                 this.form.submit('/projects')
                     .then(response => location = response.data.message);
-                // try {
-                //     location = (await axios.post('/projects', this.form)).data.message;
-                // } catch (error) {
-                //     this.errors = error.response.data.errors;
-                // }
             }
         }
     }
